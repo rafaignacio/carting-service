@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
+    <PackageReference Include="OneOf" Version="3.0.243" />
+  </ItemGroup>
+
 </Project>
