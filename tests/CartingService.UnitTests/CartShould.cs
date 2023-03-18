@@ -1,26 +1,16 @@
 using CartingService.Entities;
-using CartingService.Interfaces;
+using CartingService.UnitTests.Fakes;
 using CartingService.Validators;
 using CartingService.ValueObjects;
 using FluentAssertions;
-using Moq;
-using OneOf.Types;
 
 namespace CartingService.UnitTests;
 
 public class CartShould {
     [Fact]
     public void Be_successfully_initiated_and_contain_one_item() {
-        var registerCartMock = new Mock<IRegisterCart>();
-        var addItemToCartMock = new Mock<IAddItemToCart>();
-
-        registerCartMock.Setup(x => x.Register(It.IsAny<CartId>()))
-            .Returns(new Success());
-
-        addItemToCartMock.Setup(x => x.Add(It.IsAny<CartId>(), It.IsAny<CartItem>()))
-            .Returns(new Success());
-
-        var sut = new Cart( registerCartMock.Object, addItemToCartMock.Object, new CartItemValidator() );
+        var repository = new FakeCartRepository();
+        var sut = new Cart( repository, new CartItemValidator() );
         var id = new CartId();
 
         sut.InitiateWithId(id).Switch( 
@@ -32,5 +22,7 @@ public class CartShould {
             _ => false,
             _ => false
         ).Should().BeTrue();
+
+        repository.GetById(id).Count.Should().Be(1);
     }
 }
