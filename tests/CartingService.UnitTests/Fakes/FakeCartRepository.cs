@@ -13,7 +13,7 @@ public record FakeCartRepository : ICartRepository
     public OneOf<Success, CartItemRegistrationFailedException> AddItem(CartId cartId, CartItem item)
     {
         if( !_data.ContainsKey( cartId ) )
-            return new CartItemRegistrationFailedException("Cart does not exist on database.");
+            _data.Add(cartId, new());
 
         var cart =_data[cartId];
 
@@ -25,16 +25,11 @@ public record FakeCartRepository : ICartRepository
         return new Success();
     }
 
-    public OneOf<Success, CartRegistrationFailedException> Register(CartId id)
+    public OneOf<List<CartItem>, None> GetById(CartId cartId)
     {
-        if( _data.ContainsKey( id ) ) {
-            return new CartRegistrationFailedException("Cart already exists on database.");
-        }
+        if( !_data.ContainsKey( cartId ) )
+            return new None();
 
-        _data.Add(id, new());
-        return new Success();
+        return _data[cartId];
     }
-
-    public List<CartItem> GetById(CartId id) =>
-        _data[id];
 }

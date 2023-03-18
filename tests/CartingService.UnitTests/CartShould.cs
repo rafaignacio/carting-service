@@ -13,16 +13,15 @@ public class CartShould {
         var sut = new Cart( repository, new CartItemValidator() );
         var id = new CartId();
 
-        sut.InitiateWithId(id).Switch( 
-            _ => sut.Id.Should().Be(id),
-            _ => throw new Exception() );
-
-        sut.AddItem(new CartItem(1, "Mouse", null, 1.0M, 1)).Match<bool>(
+        sut.AddItem(id, new CartItem(1, "Mouse", null, 1.0M, 1)).Match<bool>(
             _ => true,
             _ => false,
             _ => false
         ).Should().BeTrue();
 
-        repository.GetById(id).Count.Should().Be(1);
+        repository.GetById(id).Match(
+            list => list.Count,
+            _ => 0
+        ).Should().Be(1);
     }
 }

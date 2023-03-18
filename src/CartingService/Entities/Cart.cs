@@ -16,25 +16,13 @@ public class Cart {
         _cartItemValidator = cartItemValidator;
     }
 
-    public CartId Id { get; private set; }
-
-    public OneOf<Success, CartRegistrationFailedException> InitiateWithId(CartId id) {
-        var result = _repository.Register(id);
-
-        result.Switch(
-            _ => Id = id, 
-            _ => {});
-
-        return result;
-    }
-
-    public OneOf<Success, ValidationFailed, CartItemRegistrationFailedException> AddItem(CartItem item) {
+    public OneOf<Success, ValidationFailed, CartItemRegistrationFailedException> AddItem(CartId id, CartItem item) {
         var validation = _cartItemValidator.Validate(item);
 
         if(!validation.IsValid)
             return new ValidationFailed(validation.Errors);
 
-        var result = _repository.AddItem(this.Id, item);
+        var result = _repository.AddItem(id, item);
 
         if(result.IsT1)
             return (CartItemRegistrationFailedException) result.Value;
