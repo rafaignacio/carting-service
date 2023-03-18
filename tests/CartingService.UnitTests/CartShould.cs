@@ -24,4 +24,16 @@ public class CartShould {
             _ => 0
         ).Should().Be(1);
     }
+
+    [Fact]
+    public void Indicate_errors_when_item_does_not_have_required_fields() {
+        var repository = new FakeCartRepository();
+        var sut = new Cart( repository, new CartItemValidator() );
+
+        sut.AddItem(new CartId(), new CartItem(0, string.Empty, null, 0.0M, 0)).Match<int>(
+            _ => 0,
+            errors => errors.Errors.Count(),
+            _ => 0
+        ).Should().Be(4);
+    }
 }
