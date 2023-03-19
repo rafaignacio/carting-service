@@ -1,11 +1,10 @@
-using CartingService.Exceptions;
 using CartingService.ValueObjects;
-using OneOf;
-using OneOf.Types;
 
 namespace CartingService.Interfaces;
 
 public interface ICartRepository {
-    OneOf<Success, CartItemRegistrationFailedException> AddItem(CartId cartId, CartItem item);
-    OneOf<List<CartItem>, None> GetById(CartId cartId);
+    Task AddItem(CartId cartId, CartItem item);
+    Task<List<CartItem>> GetById(CartId id);
+    Task<CartItem?> GetCartItemById(CartId cartId, int id);
+    Task Delete(CartId cartId, int itemId);
 }

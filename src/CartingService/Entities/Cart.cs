@@ -16,17 +16,42 @@ public class Cart {
         _cartItemValidator = cartItemValidator;
     }
 
-    public OneOf<Success, ValidationFailed, CartItemRegistrationFailedException> AddItem(CartId id, CartItem item) {
+    public async Task<OneOf<List<CartItem>, NotFound>> GetById(CartId id) {
+        var cart = await _repository.GetById(id);
+
+        if( cart == null || cart.Count == 0 )
+            return new NotFound();
+
+        return cart;
+    }
+
+    public async Task<OneOf<Success, ValidationFailed, CartItemRegistrationFailedException>> AddItem(CartId id, CartItem item) {
         var validation = _cartItemValidator.Validate(item);
 
         if(!validation.IsValid)
             return new ValidationFailed(validation.Errors);
 
-        var result = _repository.AddItem(id, item);
+        if( (await _repository.GetCartItemById(id, item.Id)) != null)
+            return new CartItemRegistrationFailedException("Item already exists in the cart.");
 
-        if(result.IsT1)
-            return (CartItemRegistrationFailedException) result.Value;
+        try {
+            await _repository.AddItem(id, item);
 
-        return new Success();
+            return new Success();
+        } catch( Exception e ) {
+            return new CartItemRegistrationFailedException(e.Message);
+        }
+    }
+
+    public async Task<OneOf<Success, NotFound, CartItemRemovalException>> DeleteItem(CartId cartId, int itemId) {
+        if( (await _repository.GetCartItemById(cartId, itemId)) == null )
+            return new NotFound();
+
+        try {
+            await _repository.Delete(cartId, itemId);
+            return new Success();
+        } catch( Exception e ) {
+            return new CartItemRemovalException(e.Message);
+        }
     }
 }

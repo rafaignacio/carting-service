@@ -1,8 +1,5 @@
-using CartingService.Exceptions;
 using CartingService.Interfaces;
 using CartingService.ValueObjects;
-using OneOf;
-using OneOf.Types;
 
 namespace CartingService.UnitTests.Fakes;
 
@@ -10,26 +7,40 @@ public record FakeCartRepository : ICartRepository
 {
     private Dictionary<CartId, List<CartItem>> _data = new();
 
-    public OneOf<Success, CartItemRegistrationFailedException> AddItem(CartId cartId, CartItem item)
+    private bool IsCartRegistered(CartId id) => 
+        _data.ContainsKey( id );
+
+    public Task AddItem(CartId cartId, CartItem item)
     {
-        if( !_data.ContainsKey( cartId ) )
+        if( !IsCartRegistered( cartId ) )
             _data.Add(cartId, new());
 
-        var cart =_data[cartId];
-
-        if( cart.Exists( i => i.Id == item.Id) )
-            return new CartItemRegistrationFailedException("Item already exists in the cart.");
-
+        var cart = _data[cartId];
         cart.Add(item);
 
-        return new Success();
+        return Task.CompletedTask;
     }
 
-    public OneOf<List<CartItem>, None> GetById(CartId cartId)
+    public Task Delete(CartId cartId, int itemId)
     {
-        if( !_data.ContainsKey( cartId ) )
-            return new None();
+        _data[cartId].RemoveAll( item => item.Id == itemId );
 
-        return _data[cartId];
+        return Task.CompletedTask;
+    }
+
+    public Task<List<CartItem>> GetById(CartId id)
+    {
+        if( !IsCartRegistered( id ) )
+            _data.Add(id, new());
+
+        return Task.FromResult(_data[id]);
+    }
+
+    public Task<CartItem?> GetCartItemById(CartId cartId, int id)
+    {
+        if( !IsCartRegistered( cartId ) )
+            _data.Add(cartId, new());
+
+        return Task.FromResult( _data[cartId].SingleOrDefault( i => i.Id == id ) );
     }
 }
