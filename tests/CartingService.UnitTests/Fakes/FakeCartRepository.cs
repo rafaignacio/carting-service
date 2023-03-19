@@ -40,7 +40,7 @@ public record FakeCartRepository : ICartRepository
         return Task.CompletedTask;
     }
 
-    public Task Delete(CartId cartId, int itemId)
+    public Task DeleteItem(CartId cartId, int itemId)
     {
         if(_throw_exception_remove_item)
             throw new Exception("Failed to remove item.");

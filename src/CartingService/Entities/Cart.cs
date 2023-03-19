@@ -48,7 +48,7 @@ public class Cart {
             return new NotFound();
 
         try {
-            await _repository.Delete(cartId, itemId);
+            await _repository.DeleteItem(cartId, itemId);
             return new Success();
         } catch( Exception e ) {
             return new CartItemRemovalException(e.Message);
