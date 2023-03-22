@@ -16,7 +16,7 @@ public class Cart {
         _cartItemValidator = cartItemValidator;
     }
 
-    public async Task<OneOf<List<CartItem>, NotFound>> GetById(CartId id) {
+    public async Task<OneOf<List<CartItem>, NotFound>> GetItemsByCartId(CartId id) {
         var cart = await _repository.GetById(id);
 
         if( cart == null || cart.Count == 0 )
