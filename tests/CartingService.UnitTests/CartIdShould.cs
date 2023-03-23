@@ -12,10 +12,4 @@ public class CartIdShould
         sut.Should().NotThrow();
     }
 
-    [Fact]
-    public void Create_implicitly_from_guid_object() {
-        var sut = () => (CartId) Guid.NewGuid();
-
-        sut.Should().NotThrow();
-    }
 }

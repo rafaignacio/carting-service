@@ -19,7 +19,7 @@ public class CartShould {
             _ => false,
             _ => false ).Should().BeTrue();
 
-        var cart = await sut.GetById(id);
+        var cart = await sut.GetItemsByCartId(id);
         cart.Match(
             list => list.Count,
             _ => 0 ).Should().Be(1);
@@ -34,7 +34,7 @@ public class CartShould {
         await sut.AddItem(id, new CartItem(1, "Mouse", null, 1.0M, 1));
         await sut.DeleteItem(id, 1);
 
-        var cartResult = await sut.GetById(id);
+        var cartResult = await sut.GetItemsByCartId(id);
         cartResult.Match(
             list => list.Count,
             _ => 0 ).Should().Be(0);
@@ -45,7 +45,7 @@ public class CartShould {
         var repository = new FakeCartRepository();
         var sut = new Cart( repository, new CartItemValidator() );
 
-        var cartResult = await sut.GetById(new CartId());
+        var cartResult = await sut.GetItemsByCartId(new CartId());
         cartResult.Match(
             _ => false,
             _ => true ).Should().BeTrue();
@@ -59,7 +59,7 @@ public class CartShould {
 
         await sut.DeleteItem(id, 1);
 
-        var cartResult = await sut.GetById(id);
+        var cartResult = await sut.GetItemsByCartId(id);
         cartResult.Match(
             _ => false,
             _ => true ).Should().BeTrue();
