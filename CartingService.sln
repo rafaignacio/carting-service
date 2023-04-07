@@ -5,19 +5,20 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{709FAB0D-44FF-440D-84D7-62EAACC738E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartingService", "src\CartingService\CartingService.csproj", "{642E49EF-773B-4B03-8C8D-8302684BE8A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartingService", "src\CartingService\CartingService.csproj", "{642E49EF-773B-4B03-8C8D-8302684BE8A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2B90EFD6-59F3-4D2D-9D5B-907414A53FB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartingService.UnitTests", "tests\CartingService.UnitTests\CartingService.UnitTests.csproj", "{B982EDD2-F8B2-4CF3-A086-8DC7BFC5BBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartingService.UnitTests", "tests\CartingService.UnitTests\CartingService.UnitTests.csproj", "{B982EDD2-F8B2-4CF3-A086-8DC7BFC5BBCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartingService.API", "CartingService.API\CartingService.API.csproj", "{AE8CAC1A-9755-4499-86D3-B86DECEE477E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartingService.API.IntegrationTests", "CartingService.API.IntegrationTests\CartingService.API.IntegrationTests.csproj", "{29AFEA12-77F0-4381-BCFC-32B8D87AD5D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{642E49EF-773B-4B03-8C8D-8302684BE8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -28,9 +29,25 @@ Global
 		{B982EDD2-F8B2-4CF3-A086-8DC7BFC5BBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B982EDD2-F8B2-4CF3-A086-8DC7BFC5BBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B982EDD2-F8B2-4CF3-A086-8DC7BFC5BBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE8CAC1A-9755-4499-86D3-B86DECEE477E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE8CAC1A-9755-4499-86D3-B86DECEE477E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE8CAC1A-9755-4499-86D3-B86DECEE477E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE8CAC1A-9755-4499-86D3-B86DECEE477E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29AFEA12-77F0-4381-BCFC-32B8D87AD5D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29AFEA12-77F0-4381-BCFC-32B8D87AD5D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29AFEA12-77F0-4381-BCFC-32B8D87AD5D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29AFEA12-77F0-4381-BCFC-32B8D87AD5D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{642E49EF-773B-4B03-8C8D-8302684BE8A4} = {709FAB0D-44FF-440D-84D7-62EAACC738E0}
 		{B982EDD2-F8B2-4CF3-A086-8DC7BFC5BBCC} = {2B90EFD6-59F3-4D2D-9D5B-907414A53FB9}
+		{AE8CAC1A-9755-4499-86D3-B86DECEE477E} = {709FAB0D-44FF-440D-84D7-62EAACC738E0}
+		{29AFEA12-77F0-4381-BCFC-32B8D87AD5D6} = {2B90EFD6-59F3-4D2D-9D5B-907414A53FB9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8DD5850C-48EF-4241-8DE3-21CCA1B0746A}
 	EndGlobalSection
 EndGlobal
