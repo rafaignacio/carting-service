@@ -60,4 +60,29 @@ public class CartRepository : ICartRepository
 
         return Task.FromResult(cart.SingleOrDefault(i => i.Id == id));
     }
+
+    public Task RemoveItemFromCarts(int itemId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateItemsData(int id, string name, decimal price)
+    {
+        using var db = new LiteDatabase(ConnectionString);
+        var cartCollection = db.GetCollection<CartModel>("carts");
+
+        var carts = cartCollection.Find(c => 
+            c.Items.Where(i => i.Id == id).Count() > 0);
+        
+        foreach(var cart in carts)
+        {
+            var item = cart.Items.First(i => i.Id == id);
+            item.Name = name;
+            item.Price = price;
+
+            cartCollection.Update(cart);
+        }
+
+        return Task.CompletedTask;
+    }
 }

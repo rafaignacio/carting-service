@@ -7,4 +7,7 @@ public interface ICartRepository {
     Task<List<CartItem>> GetById(CartId id);
     Task<CartItem?> GetCartItemById(CartId cartId, int id);
     Task DeleteItem(CartId cartId, int itemId);
+
+    Task UpdateItemsData(int id, string name, decimal price);
+    Task RemoveItemFromCarts(int itemId);
 }
