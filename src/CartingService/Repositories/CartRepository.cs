@@ -2,7 +2,6 @@ using CartingService.Interfaces;
 using CartingService.Models;
 using CartingService.ValueObjects;
 using LiteDB;
-
 namespace CartingService.Repositories;
 
 public class CartRepository : ICartRepository
@@ -63,7 +62,21 @@ public class CartRepository : ICartRepository
 
     public Task RemoveItemFromCarts(int itemId)
     {
-        throw new NotImplementedException();
+        using var db = new LiteDatabase(ConnectionString);
+        var cartCollection = db.GetCollection<CartModel>("carts");
+
+        var carts = cartCollection.Find(c =>
+            c.Items.Where(i => i.Id == itemId).Count() > 0);
+
+        foreach (var cart in carts)
+        {
+            var item = cart.Items.First(i => i.Id == itemId);
+            cart.Items.Remove(item);
+            
+            cartCollection.Update(cart);
+        }
+
+        return Task.CompletedTask;
     }
 
     public Task UpdateItemsData(int id, string name, decimal price)
