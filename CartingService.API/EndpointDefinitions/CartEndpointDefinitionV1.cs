@@ -16,6 +16,7 @@ public class CartEndpointDefinitionV1 : IEndpointDefinition
     public void DefineEndpoints(WebApplication app)
     {
         app.MapGet("/v1/carts/{id}", GetCartById)
+            .RequireAuthorization("default")
             .WithGroupName("v1")
             .WithOpenApi( opt =>
             {
@@ -25,6 +26,7 @@ public class CartEndpointDefinitionV1 : IEndpointDefinition
             .Produces<CartResponse>(200)
             .Produces(404);
         app.MapPost("/v1/carts", AddItemToCart)
+            .RequireAuthorization("default")
             .Accepts<AddCartItemRequest>("application/json")
             .WithGroupName("v1")
             .WithOpenApi(opt =>
@@ -36,6 +38,7 @@ public class CartEndpointDefinitionV1 : IEndpointDefinition
             .Produces<ValidationFailed>(400)
             .Produces<ProblemDetails>(500);
         app.MapDelete("/v1/carts/{id}/{itemId}", DeleteItemFromCart)
+            .RequireAuthorization("default")
             .WithGroupName("v1")
             .WithOpenApi(opt =>
                 {

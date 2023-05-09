@@ -11,6 +11,7 @@ public class CartEndpointDefinitionV2 : IEndpointDefinition
     public void DefineEndpoints(WebApplication app)
     {
         app.MapGet("/v2/carts/{id}", GetCartById)
+            .RequireAuthorization("default")
             .WithGroupName("v2")
             .WithOpenApi(opt =>
             {
