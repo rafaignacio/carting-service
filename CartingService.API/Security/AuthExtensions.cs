@@ -25,7 +25,7 @@ public static class AuthExtensions
 
             options.TokenValidationParameters = new()
             {
-                ValidAudience = configuration["JwtConfig:Audience"]!,
+                ValidAudiences = configuration["JwtConfig:Audience"]!.Split(','),
                 ValidIssuer = configuration["JwtConfig:Issuer"]!,
                 IssuerSigningKey = new RsaSecurityKey(rsa),
 
